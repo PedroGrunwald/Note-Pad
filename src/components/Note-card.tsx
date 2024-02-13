@@ -5,22 +5,25 @@ import { X } from "lucide-react";
 
 interface NoteCardProps {
   note: {
+    id: string;
     date: Date;
     content: string;
   };
+
+  onNoteDeleted: (id: string) => void;
 }
 
-export function Notecard(props: NoteCardProps) {
+export function Notecard({ note, onNoteDeleted }: NoteCardProps) {
   return (
     <Dialog.Root>
       <Dialog.Trigger className="roundend-md text-left flex-col gap-3 p-5 overflow-hidden relative bg-slate-800 hover:ring-2 hover:ring-slate-600 focus-visible:ring-2 focus-visible:ring-lime-400 outline-none ">
         <span className="text-sm font-medium text-slate-300">
-          {formatDistanceToNow(props.note.date, {
+          {formatDistanceToNow(note.date, {
             locale: ptBR,
             addSuffix: true,
           })}
         </span>
-        <p className="text-sm leading-6 text-slate-400">{props.note.content}</p>
+        <p className="text-sm leading-6 text-slate-400">{note.content}</p>
 
         <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 to-black/0 pointer-events-none" />
       </Dialog.Trigger>
@@ -34,18 +37,17 @@ export function Notecard(props: NoteCardProps) {
 
           <div className="flex flex-1 flex-col gap-3 p-5 ">
             <span className="text-sm font-medium text-slate-200">
-              {formatDistanceToNow(props.note.date, {
+              {formatDistanceToNow(note.date, {
                 locale: ptBR,
                 addSuffix: true,
               })}
             </span>
-            <p className="text-sm leading-6 text-slate-400">
-              {props.note.content}
-            </p>
+            <p className="text-sm leading-6 text-slate-400">{note.content}</p>
           </div>
 
           <button
             type="button"
+            onClick={() => onNoteDeleted(note.id)}
             className="w-full bg-slate-800 py-4 text-center text-sm text-slate-300 outline-none font-medium group"
           >
             Deseja{" "}
